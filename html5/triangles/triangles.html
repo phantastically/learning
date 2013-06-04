@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Triangles</title>
+	<script>
+		d2r = function(degrees) {
+			return degrees * Math.PI / 180.0;
+		}
+		
+		cosd = function(theta) {
+			return Math.cos(d2r(theta));
+		}
+		
+		sind = function(theta) {
+			return Math.sin(d2r(theta));
+		}
+	</script>
+  </head>
+  <body>
+	<input id="slider" type="range" min="0" max="20" value="10" step="1" />
+	<span id="sliderValue">10</span>
+    <canvas id="c" width="500" height="500" />
+	
+	<script>
+		var c = document.getElementById("c");
+		var cx = c.getContext("2d");
+		
+		var i = 0;
+
+		// We need three points, each 120 degrees apart on a circle.
+		// The center of the circle is at (250, 250). The circle // has a radius of, sure, 250.
+		
+		var drawNext = function(i) {
+			cx.clearRect(0, 0, 500, 500);
+			
+			cx.beginPath();
+			cx.strokeStyle = "#f00";
+			
+			var x0 = 250 + (250 * cosd(i));
+			var y0 = 250 + (250 * sind(i));
+			var x1 = 250 + (250 * cosd(120 + i));
+			var y1 = 250 + (250 * sind(120 + i));
+			var x2 = 250 + (250 * cosd(240 + i));
+			var y2 = 250 + (250 * sind(240 + i));
+			
+			cx.moveTo(x0, y0);
+			cx.lineTo(x1, y1);
+			cx.lineTo(x2, y2);
+			cx.lineTo(x0, y0);
+			cx.closePath();
+			cx.stroke();
+		}
+
+		var i = 0;
+		var speedSlider = document.getElementById("slider");
+		var speedText = document.getElementById("sliderValue");
+		setInterval(function() {
+			drawNext(i);
+			while (speedText.firstChild) {
+				speedText.removeChild(speedText.firstChild);
+			}
+			speedText.appendChild(document.createTextNode(slider.value));
+			i += slider.valueAsNumber;
+			i %= 360;
+		}, 50);		
+	</script>
+  </body>
+</html>
