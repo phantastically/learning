@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>
+			Geolocation testing
+		</title>
+		<script>
+		</script>
+	</head>
+	<body>
+		<h1>Geolocation testing</h1>
+		<p>This is a test of HTML5's native geolocation support.</p>
+		<span id="span">Loading...</span>
+		<script>
+			var latitude = -1;
+			var longitude = -1;
+			
+			var getPosition = function(position) { 
+				latitude = position.coords.latitude;
+				longitude = position.coords.longitude;
+				
+				latd = Math.floor(latitude);
+				latm = (latitude - Math.floor(latitude)) * 60;
+				
+				lngd = Math.floor(longitude);
+				lngm = (longitude - Math.floor(longitude)) * 60;
+				document.getElementById("span").innerHTML = "<p>" + latd + " deg, " + latm + "' N, " + lngd + " deg, " + lngm + "' W</p><p>" + latitude + ", " + longitude + "</p><p><a href=\"http://maps.apple.com/?ll=" + latitude + "," + longitude + "\">Open in Apple Maps</a></p>";
+			};
+			
+			navigator.geolocation.getCurrentPosition(getPosition);
+		</script>
+	</body>
+</html>
